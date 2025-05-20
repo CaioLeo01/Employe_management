@@ -15,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+
 @Service
 @Transactional
 public class EmployeeService {
@@ -29,6 +31,10 @@ public class EmployeeService {
     }
 
     public EmployeeDTO createEmployee(EmployeeDTO employeeDTO) {
+        if (employeeDTO.getAdmissionDate() == null) {
+            throw new IllegalArgumentException("Admission date is mandatory");
+        }
+        
         Role role = roleRepository.findById(employeeDTO.getRole().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Role not found with id " + employeeDTO.getRole().getId()));
         
@@ -55,6 +61,10 @@ public class EmployeeService {
     public EmployeeDTO updateEmployee(Long id, EmployeeDTO employeeDTO) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id " + id));
+        
+        if (employeeDTO.getAdmissionDate() == null) {
+            employeeDTO.setAdmissionDate(employee.getAdmissionDate());
+        }
         
         Role role = roleRepository.findById(employeeDTO.getRole().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Role not found with id " + employeeDTO.getRole().getId()));

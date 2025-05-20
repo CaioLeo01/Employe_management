@@ -17,7 +17,7 @@ public class EmployeeDTO {
     @Email(message = "Email should be valid")
     private String email;
 
-    @NotNull(message = "Admission date is mandatory")
+    
     @PastOrPresent(message = "Admission date cannot be in the future")
     private LocalDate admissionDate;
 

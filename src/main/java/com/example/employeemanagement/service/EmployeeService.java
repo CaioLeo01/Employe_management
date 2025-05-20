@@ -10,72 +10,60 @@ import com.example.employeemanagement.repository.RoleRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class EmployeeService {
-    @Autowired
-    private EmployeeRepository employeeRepository;
+
+    private final EmployeeRepository employeeRepository;
+    private final RoleRepository roleRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
+    public EmployeeService(EmployeeRepository employeeRepository, RoleRepository roleRepository) {
+        this.employeeRepository = employeeRepository;
+        this.roleRepository = roleRepository;
+    }
 
     public EmployeeDTO createEmployee(EmployeeDTO employeeDTO) {
         Role role = roleRepository.findById(employeeDTO.getRole().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Role not found with id " + employeeDTO.getRole().getId()));
+        
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDTO, employee);
         employee.setRole(role);
+        
         employee = employeeRepository.save(employee);
-        BeanUtils.copyProperties(employee, employeeDTO);
-        employeeDTO.setRole(new RoleDTO(role.getId(), role.getName(), role.getDescription()));
-        return employeeDTO;
+        return convertToDto(employee);
     }
 
-    public Page<EmployeeDTO> getAllEmployees(String roleName, String name, int page, int size) {
+    public Page<EmployeeDTO> getAllEmployees(String name, String email, String roleName, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        List<Employee> employees = employeeRepository.findByFilters(roleName, name);
-        List<EmployeeDTO> dtos = employees.stream().map(employee -> {
-            EmployeeDTO dto = new EmployeeDTO();
-            BeanUtils.copyProperties(employee, dto);
-            RoleDTO roleDTO = new RoleDTO();
-            BeanUtils.copyProperties(employee.getRole(), roleDTO);
-            dto.setRole(roleDTO);
-            return dto;
-        }).collect(Collectors.toList());
-        int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), dtos.size());
-        return new PageImpl<>(dtos.subList(start, end), pageable, dtos.size());
+        Page<Employee> employeePage = employeeRepository.findByFilters(name, email, roleName, pageable);
+        return employeePage.map(this::convertToDto);
     }
 
     public EmployeeDTO getEmployeeById(Long id) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id " + id));
-        EmployeeDTO dto = new EmployeeDTO();
-        BeanUtils.copyProperties(employee, dto);
-        RoleDTO roleDTO = new RoleDTO();
-        BeanUtils.copyProperties(employee.getRole(), roleDTO);
-        dto.setRole(roleDTO);
-        return dto;
+        return convertToDto(employee);
     }
 
     public EmployeeDTO updateEmployee(Long id, EmployeeDTO employeeDTO) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id " + id));
+        
         Role role = roleRepository.findById(employeeDTO.getRole().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Role not found with id " + employeeDTO.getRole().getId()));
+        
         BeanUtils.copyProperties(employeeDTO, employee, "id");
         employee.setRole(role);
+        
         employee = employeeRepository.save(employee);
-        BeanUtils.copyProperties(employee, employeeDTO);
-        employeeDTO.setRole(new RoleDTO(role.getId(), role.getName(), role.getDescription()));
-        return employeeDTO;
+        return convertToDto(employee);
     }
 
     public void deleteEmployee(Long id) {
@@ -83,5 +71,16 @@ public class EmployeeService {
             throw new ResourceNotFoundException("Employee not found with id " + id);
         }
         employeeRepository.deleteById(id);
+    }
+
+    private EmployeeDTO convertToDto(Employee employee) {
+        EmployeeDTO dto = new EmployeeDTO();
+        BeanUtils.copyProperties(employee, dto);
+        
+        RoleDTO roleDTO = new RoleDTO();
+        BeanUtils.copyProperties(employee.getRole(), roleDTO);
+        dto.setRole(roleDTO);
+        
+        return dto;
     }
 }

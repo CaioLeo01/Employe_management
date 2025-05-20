@@ -21,15 +21,16 @@ public class EmployeeController {
     }
 
     @GetMapping
-    @ApiOperation(value = "List employees with optional filtering and pagination", 
-                  notes = "Returns a paginated list of employees. Use 'name' and 'email' to filter, and 'page' and 'size' for pagination.")
-    public Page<EmployeeDTO> getAllEmployees(
-            @ApiParam(value = "Filter by name") @RequestParam(value = "name", required = false) String name,
-            @ApiParam(value = "Filter by email") @RequestParam(value = "email", required = false) String email,
-            @ApiParam(value = "Page number", example = "0") @RequestParam(value = "page", defaultValue = "0") int page,
-            @ApiParam(value = "Page size", example = "10") @RequestParam(value = "size", defaultValue = "10") int size) {
-        return employeeService.getAllEmployees(name, email, page, size);
-    }
+@ApiOperation(value = "List employees with optional filtering and pagination", 
+              notes = "Returns a paginated list of employees. Use 'name', 'email' and 'roleName' to filter, and 'page' and 'size' for pagination.")
+public Page<EmployeeDTO> getAllEmployees(
+        @ApiParam(value = "Filter by employee name") @RequestParam(value = "name", required = false) String name,
+        @ApiParam(value = "Filter by employee email") @RequestParam(value = "email", required = false) String email,
+        @ApiParam(value = "Filter by role name") @RequestParam(value = "roleName", required = false) String roleName,
+        @ApiParam(value = "Page number", example = "0") @RequestParam(value = "page", defaultValue = "0") int page,
+        @ApiParam(value = "Page size", example = "10") @RequestParam(value = "size", defaultValue = "10") int size) {
+    return employeeService.getAllEmployees(name, email, roleName, page, size);
+}
 
     @GetMapping("/{id}")
     @ApiOperation(value = "Get employee by ID")

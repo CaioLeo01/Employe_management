@@ -26,4 +26,11 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
     Page<Employee> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<Employee> findByEmailContainingIgnoreCase(String email, Pageable pageable);
     Page<Employee> findByRoleNameContainingIgnoreCase(String roleName, Pageable pageable);
+    
+    // Novo método para verificar existência de email
+    boolean existsByEmail(String email);
+    
+    // Método para verificar email excluindo um ID específico (útil para update)
+    @Query("SELECT CASE WHEN COUNT(e) > 0 THEN true ELSE false END FROM Employee e WHERE e.email = :email AND e.id <> :id")
+    boolean existsByEmailAndIdNot(@Param("email") String email, @Param("id") Long id);
 }

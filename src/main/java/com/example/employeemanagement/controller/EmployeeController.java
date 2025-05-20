@@ -5,6 +5,7 @@ import com.example.employeemanagement.service.EmployeeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,20 +40,24 @@ public class EmployeeController {
 
     @PostMapping
     @ApiOperation(value = "Create a new employee")
-    public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
+    public ResponseEntity<EmployeeDTO> createEmployee(
+            @ApiParam(value = "Employee data to create", required = true) 
+            @Valid @RequestBody EmployeeDTO employeeDTO) {
         return ResponseEntity.ok(employeeService.createEmployee(employeeDTO));
     }
 
     @PutMapping("/{id}")
     @ApiOperation(value = "Update an employee")
-    public ResponseEntity<EmployeeDTO> updateEmployee(@ApiParam(value = "Employee ID") @PathVariable Long id, 
-                                                     @RequestBody EmployeeDTO employeeDTO) {
+    public ResponseEntity<EmployeeDTO> updateEmployee(
+            @ApiParam(value = "Employee ID", required = true) @PathVariable Long id, 
+            @ApiParam(value = "Employee data to update", required = true) 
+            @Valid @RequestBody EmployeeDTO employeeDTO) {
         return ResponseEntity.ok(employeeService.updateEmployee(id, employeeDTO));
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "Delete an employee")
-    public ResponseEntity<Void> deleteEmployee(@ApiParam(value = "Employee ID") @PathVariable Long id) {
+    public ResponseEntity<Void> deleteEmployee(@ApiParam(value = "Employee ID", required = true) @PathVariable Long id) {
         employeeService.deleteEmployee(id);
         return ResponseEntity.noContent().build();
     }

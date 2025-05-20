@@ -8,14 +8,13 @@ import com.example.employeemanagement.model.Role;
 import com.example.employeemanagement.repository.EmployeeRepository;
 import com.example.employeemanagement.repository.RoleRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+
 
 @Service
 @Transactional
@@ -24,7 +23,7 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final RoleRepository roleRepository;
 
-    @Autowired
+    
     public EmployeeService(EmployeeRepository employeeRepository, RoleRepository roleRepository) {
         this.employeeRepository = employeeRepository;
         this.roleRepository = roleRepository;
@@ -35,6 +34,10 @@ public class EmployeeService {
             throw new IllegalArgumentException("Admission date is mandatory");
         }
         
+        if (employeeRepository.existsByEmail(employeeDTO.getEmail())) {
+            throw new IllegalArgumentException("Email already registered");
+        }
+
         Role role = roleRepository.findById(employeeDTO.getRole().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Role not found with id " + employeeDTO.getRole().getId()));
         
@@ -42,8 +45,7 @@ public class EmployeeService {
         BeanUtils.copyProperties(employeeDTO, employee);
         employee.setRole(role);
         
-        employee = employeeRepository.save(employee);
-        return convertToDto(employee);
+        return convertToDto(employeeRepository.save(employee));
     }
 
     public Page<EmployeeDTO> getAllEmployees(String name, String email, String roleName, int page, int size) {
@@ -66,14 +68,18 @@ public class EmployeeService {
             employeeDTO.setAdmissionDate(employee.getAdmissionDate());
         }
         
+        if (!employee.getEmail().equals(employeeDTO.getEmail()) && 
+            employeeRepository.existsByEmail(employeeDTO.getEmail())) {
+            throw new IllegalArgumentException("Email already registered");
+        }
+
         Role role = roleRepository.findById(employeeDTO.getRole().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Role not found with id " + employeeDTO.getRole().getId()));
         
         BeanUtils.copyProperties(employeeDTO, employee, "id");
         employee.setRole(role);
         
-        employee = employeeRepository.save(employee);
-        return convertToDto(employee);
+        return convertToDto(employeeRepository.save(employee));
     }
 
     public void deleteEmployee(Long id) {

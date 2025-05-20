@@ -1,71 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
+    <!-- Versão do modelo POM que estamos usando -->
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
-    <artifactId>gestao-de-funcionarios</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>gestao-de-funcionarios</name>
-    <description>REST API for Employee and Role Management</description>
+    <!-- Informações do projeto -->
+    <groupId>com.example</groupId> <!-- Identificador único do projeto, geralmente o domínio invertido -->
+    <artifactId>gestao-de-funcionarios</artifactId> <!-- Nome do artefato -->
+    <version>0.0.1-SNAPSHOT</version> <!-- Versão do projeto -->
+    <name>gestao-de-funcionarios</name> <!-- Nome legível do projeto -->
+    <description>REST API for Employee and Role Management</description> <!-- Descrição do projeto -->
 
+    <!-- Definição do Spring Boot como projeto pai -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.5</version>
-        <relativePath/>
+        <version>3.4.5</version> <!-- Versão do Spring Boot -->
+        <relativePath/> <!-- Caminho relativo do projeto pai -->
     </parent>
 
+    <!-- Definindo as propriedades do projeto, como a versão do Java -->
     <properties>
-        <java.version>21</java.version>
+        <java.version>21</java.version> <!-- A versão do Java usada no projeto -->
     </properties>
 
+    <!-- Definição das dependências do projeto -->
     <dependencies>
+        
+        <!-- Dependência para trabalhar com JPA e banco de dados -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
+        <!-- Dependência para o desenvolvimento da API REST com Spring Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <!-- Dependência para validação de dados com anotações (como @Valid) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+
+        <!-- Dependência para banco de dados H2 (em memória) -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>runtime</scope>
+            <scope>runtime</scope> <!-- Necessário apenas em tempo de execução -->
         </dependency>
+
+        <!-- Dependência do Springfox para gerar a documentação Swagger da API -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>
-            <version>3.0.0</version>
+            <version>3.0.0</version> <!-- Versão do Swagger -->
         </dependency>
+
+        <!-- Dependência para adicionar o Swagger UI (interface para explorar a API) -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>3.0.0</version>
         </dependency>
+
+        <!-- Dependência para o Lombok, que ajuda a reduzir o código repetitivo (gerando getters, setters, etc.) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <optional>true</optional> <!-- Lombok não é necessário em tempo de execução -->
         </dependency>
+
+        <!-- Dependência para os testes do Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <scope>test</scope> <!-- Necessário apenas para testes -->
         </dependency>
     </dependencies>
 
+    <!-- Configuração de build do projeto -->
     <build>
         <plugins>
+            <!-- Plugin para integrar o Spring Boot ao Maven -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <!-- Exclui o Lombok do pacote final, pois ele não é necessário em tempo de execução -->
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>

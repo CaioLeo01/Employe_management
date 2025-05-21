@@ -49,9 +49,8 @@ docker run -p 8080:8080 gestao-funcionarios
 
 ## 📚 Documentação da API
 
-Acesse a documentação interativa:
-- Swagger UI: http://localhost:8080/swagger-ui.html
-- OpenAPI: http://localhost:8080/v3/api-docs
+#Front-end: \gestão de funcionários\frontend\Documentação do Frontend.markdown
+#Back-end: \gestão de funcionários\Documentação do Backend.markdown
 
 ## 🧪 Testes
 ```bash

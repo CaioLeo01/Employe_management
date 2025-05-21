@@ -1,22 +1,30 @@
-// Define o pacote onde esta interface está localizada
 package com.example.employeemanagement.repository;
 
-// Importa a entidade Role, que será manipulada por este repositório
 import com.example.employeemanagement.model.Role;
-
-// Importa a interface JpaRepository, que fornece operações CRUD prontas
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-// Declara a interface do repositório da entidade Role
-// Estende JpaRepository para herdar métodos de acesso a dados
+/**
+ * Repository interface for Role entities with custom query methods.
+ */
+@Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
-    // Como JpaRepository já fornece todos os métodos básicos (CRUD),
-    // não é necessário declarar nada aqui por enquanto.
 
-    // Exemplos de métodos herdados:
-    // - findAll()
-    // - findById(Long id)
-    // - save(Role role)
-    // - deleteById(Long id)
-    // - existsById(Long id)
+    /**
+     * Checks if a role with the given name exists.
+     * @param name the role name to check
+     * @return true if a role with this name exists, false otherwise
+     */
+    boolean existsByName(String name);
+    
+    /**
+     * Checks if another role (excluding the specified ID) has the given name.
+     * @param name the role name to check
+     * @param id the ID of the role to exclude from the check
+     * @return true if another role with this name exists, false otherwise
+     */
+    @Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END FROM Role r WHERE r.name = :name AND r.id <> :id")
+    boolean existsByNameAndIdNot(@Param("name") String name, @Param("id") Long id);
 }

@@ -59,7 +59,7 @@ public class RoleService {
      */
     public RoleDTO getRoleById(Long id) {
         Role role = roleRepository.findById(id) // Busca a entidade Role pelo ID
-            .orElseThrow(() -> new ResourceNotFoundException("Role not found with id " + id));
+            .orElseThrow(() -> new ResourceNotFoundException("Cargo não encontrada com id " + id));
         RoleDTO dto = new RoleDTO(); // Cria o DTO de retorno
         BeanUtils.copyProperties(role, dto); // Copia os dados da entidade para o DTO
         return dto;
@@ -74,7 +74,7 @@ public class RoleService {
      */
     public RoleDTO updateRole(Long id, RoleDTO roleDTO) {
         Role role = roleRepository.findById(id) // Busca a Role existente
-            .orElseThrow(() -> new ResourceNotFoundException("Role not found with id " + id));
+            .orElseThrow(() -> new ResourceNotFoundException("Cargo não encontrada com id " + id));
         BeanUtils.copyProperties(roleDTO, role, "id"); // Atualiza os campos (exceto o ID)
         role = roleRepository.save(role); // Persiste as mudanças
         BeanUtils.copyProperties(role, roleDTO); // Atualiza o DTO com os dados salvos
@@ -88,7 +88,7 @@ public class RoleService {
      */
     public void deleteRole(Long id) {
         if (!roleRepository.existsById(id)) { // Verifica se a Role existe
-            throw new ResourceNotFoundException("Role not found with id " + id);
+            throw new ResourceNotFoundException("Cargo não encontrada com id " + id);
         }
         roleRepository.deleteById(id); // Exclui a Role do banco
     }

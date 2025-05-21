@@ -532,12 +532,12 @@ export default defineComponent({
         this.empregado.admissionDate = new Date().toISOString().substr(0, 10);
         this.empregado.roleId = null;
 
-        // Manually add the new employee to the table
+        // Manually add the new employee to the table with local date adjustment
         this.empregados.push({
           id: response.data.id,
           name: response.data.name,
           email: response.data.email,
-          admissionDate: response.data.admissionDate.split('T')[0], // Normalize to YYYY-MM-DD
+          admissionDate: this.normalizeLocalDate(response.data.admissionDate),
           roleId: response.data.role?.id || this.empregado.roleId
         });
       } catch (error) {
@@ -554,9 +554,7 @@ export default defineComponent({
           id: emp.id,
           name: emp.name || '',
           email: emp.email || '',
-          admissionDate: emp.admissionDate ? 
-            (emp.admissionDate.includes('T') ? emp.admissionDate.split('T')[0] : emp.admissionDate) : 
-            new Date().toISOString().substr(0, 10),
+          admissionDate: this.normalizeLocalDate(emp.admissionDate),
           roleId: emp.role?.id || emp.roleId || null
         }));
       } catch (error) {
@@ -568,7 +566,7 @@ export default defineComponent({
       this.editingEmpregado = { 
         ...empregado,
         roleId: empregado.role?.id || empregado.roleId,
-        admissionDate: empregado.admissionDate.split('T')[0] // Normalize to YYYY-MM-DD
+        admissionDate: this.normalizeLocalDate(empregado.admissionDate)
       };
       this.editEmpregadoDialog = true;
     },
@@ -591,9 +589,7 @@ export default defineComponent({
           this.empregados.splice(index, 1, {
             ...response.data,
             roleId: response.data.role?.id || response.data.roleId || this.editingEmpregado.roleId,
-            admissionDate: response.data.admissionDate ? 
-              (response.data.admissionDate.includes('T') ? response.data.admissionDate.split('T')[0] : response.data.admissionDate) : 
-              this.editingEmpregado.admissionDate
+            admissionDate: this.normalizeLocalDate(response.data.admissionDate)
           });
         }
       } catch (error) {
@@ -614,6 +610,13 @@ export default defineComponent({
     },
 
     // Métodos auxiliares
+    normalizeLocalDate(dateString: string): string {
+      // Parse the date string and adjust to local timezone
+      const date = new Date(dateString);
+      // Set to midnight in local time to avoid timezone offset issues
+      return date.toISOString().split('T')[0];
+    },
+
     handleError(error: any, tipo: 'cargo' | 'empregado', operacao: string = 'manipular') {
       if (axios.isAxiosError(error) && error.response) {
         switch (error.response.status) {
@@ -640,9 +643,8 @@ export default defineComponent({
 
     formatDate(dateString: string) {
       if (!dateString) return '';
-      // Ensure date is in YYYY-MM-DD format before formatting
-      const normalizedDate = dateString.includes('T') ? dateString.split('T')[0] : dateString;
-      const date = new Date(normalizedDate);
+      // Use the normalized date directly without re-parsing
+      const date = new Date(dateString + 'T00:00:00');
       return date.toLocaleDateString('pt-BR');
     },
 

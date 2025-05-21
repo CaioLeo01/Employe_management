@@ -532,12 +532,12 @@ export default defineComponent({
         this.empregado.admissionDate = new Date().toISOString().substr(0, 10);
         this.empregado.roleId = null;
 
-        // Manually add the new employee to the table to avoid a fetch delay
+        // Manually add the new employee to the table
         this.empregados.push({
           id: response.data.id,
           name: response.data.name,
           email: response.data.email,
-          admissionDate: response.data.admissionDate,
+          admissionDate: response.data.admissionDate.split('T')[0], // Normalize to YYYY-MM-DD
           roleId: response.data.role?.id || this.empregado.roleId
         });
       } catch (error) {
@@ -568,7 +568,7 @@ export default defineComponent({
       this.editingEmpregado = { 
         ...empregado,
         roleId: empregado.role?.id || empregado.roleId,
-        admissionDate: empregado.admissionDate.split('T')[0]
+        admissionDate: empregado.admissionDate.split('T')[0] // Normalize to YYYY-MM-DD
       };
       this.editEmpregadoDialog = true;
     },
@@ -640,7 +640,9 @@ export default defineComponent({
 
     formatDate(dateString: string) {
       if (!dateString) return '';
-      const date = new Date(dateString);
+      // Ensure date is in YYYY-MM-DD format before formatting
+      const normalizedDate = dateString.includes('T') ? dateString.split('T')[0] : dateString;
+      const date = new Date(normalizedDate);
       return date.toLocaleDateString('pt-BR');
     },
 

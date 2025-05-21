@@ -1,106 +1,106 @@
-📌 1. Título do Projeto
-Exemplo:
+# 🚀 Sistema de Gestão de Empregados e Cargos (Frontend)
 
-bash
-Copiar
-Editar
-# Sistema de Gestão de Empregados e Cargos (Frontend)
-📝 2. Descrição
-Breve descrição do que o projeto faz e seus objetivos.
+Frontend desenvolvido como parte do teste técnico, conectado à API de backend para gerenciamento de empregados e cargos. A aplicação permite operações de **CRUD completo**, com **validações de formulário**, **feedback visual** e **modo escuro/claro**.
 
-css
-Copiar
-Editar
-Aplicação frontend desenvolvida para teste técnico, com funcionalidades de cadastro, edição, listagem e exclusão de empregados e cargos. 
-A interface é responsiva, possui validações de formulário e alternância de tema visual.
-🚀 3. Funcionalidades
-Liste as funcionalidades implementadas conforme a API:
+---
 
- Criar cargo
+## 📌 Funcionalidades
 
- Editar cargo
+- ✅ Listar empregados e cargos
+- ✅ Cadastrar, editar e excluir cargos
+- ✅ Cadastrar, editar e excluir empregados
+- ✅ Validação de dados antes do envio
+- ✅ Exibição de mensagens de erro, sucesso e carregamento
+- ✅ Interface 100% responsiva
+- ✅ Alternância entre tema claro e escuro
 
- Excluir cargo
+---
 
- Listar cargos
+## 🛠️ Tecnologias Utilizadas
 
- Criar empregado
+- [Vue 3 + TypeScript](https://vuejs.org/)
+- [Vuetify (UI Framework)](https://vuetifyjs.com/)
+- [Axios (requisições HTTP)](https://axios-http.com/)
+- [Vite (empacotador)](https://vitejs.dev/)
 
- Editar empregado
+---
 
- Excluir empregado
+## 📦 Instalação Local
 
- Listar empregados
+1. Clone o repositório:
 
- Validações de formulário
-
- Feedback visual (erros, carregamento, sucesso)
-
- Alternância de tema (claro/escuro)
-
- Responsividade
-
-💻 4. Tecnologias Utilizadas
-Liste o que foi usado no projeto:
-
-diff
-Copiar
-Editar
-- Vue 3 + TypeScript
-- Vuetify
-- Axios
-- Vite
-📦 5. Instalação
-bash
-Copiar
-Editar
-# Clone o repositório
+```bash
 git clone https://github.com/seu-usuario/seu-repositorio.git
 cd seu-repositorio
+Instale as dependências:
 
-# Instale as dependências
+bash
+Copiar
+Editar
 npm install
+Execute a aplicação:
 
-# Execute a aplicação
+bash
+Copiar
+Editar
 npm run dev
-🌐 6. Backend
-Informe se o backend deve estar rodando, e onde ele está:
+⚠️ Importante: certifique-se de que a API backend está ativa em http://localhost:3000 (ou o endereço configurado no seu ambiente).
 
-less
+🌐 Backend
+A aplicação depende de uma API RESTful previamente desenvolvida para:
+
+GET /api/cargos
+
+POST /api/cargos
+
+PUT /api/cargos/:id
+
+DELETE /api/cargos/:id
+
+GET /api/empregados
+
+POST /api/empregados
+
+PUT /api/empregados/:id
+
+DELETE /api/empregados/:id
+
+📸 Screenshots
+📱 Interface Responsiva
+Modo Claro	Modo Escuro
+
+🎯 Diferenciais Implementados
+✅ Temas dinâmicos (modo claro/escuro)
+
+✅ Feedback por snackbar em todas as operações
+
+✅ Validações no frontend antes de qualquer requisição
+
+✅ Estilização com Vuetify e animações suaves
+
+✅ Organização por métodos e componentes
+
+📁 Organização de Pastas
+plaintext
 Copiar
 Editar
-Certifique-se de que a API backend está ativa em: http://localhost:3000 (ou conforme sua configuração)
-📸 7. Screenshots (com imagens)
-Insira capturas de tela da aplicação rodando (pelo menos 2: modo claro e escuro + exibição dos dados)
+src/
+├── components/          # Componentes reutilizáveis (ex: formulário, tabela)
+├── views/               # Views principais da aplicação
+├── assets/              # Ícones, logos, imagens
+├── App.vue              # Root do app
+├── main.ts              # Entry point
+public/
+├── screenshot-light.png # Screenshot do tema claro
+├── screenshot-dark.png  # Screenshot do tema escuro
+🧪 Como Testar
+Suba a API backend localmente
 
-markdown
-Copiar
-Editar
-### Modo Claro
+Inicie o frontend
 
-![Modo Claro]()
+Acesse http://localhost:5173
 
-### Modo Escuro
+Teste todas as funcionalidades: cadastrar, editar, excluir, trocar temas, etc.
 
-![Modo Escuro](./docs/screenshot-dark.png)
-🔗 8. Link em Produção (Bônus)
-Se você publicou a aplicação (ex: Vercel, Netlify, etc.)
-
-less
-Copiar
-Editar
-Acesse a aplicação em produção: [https://minhaaplicacao.vercel.app](https://minhaaplicacao.vercel.app)
-📖 9. Observações Técnicas (opcional)
-Algum detalhe de implementação ou ponto importante?
-
-markdown
-Copiar
-Editar
-- O campo `roleId` é validado antes do envio.
-- As mensagens de erro retornadas pela API são exibidas no snackbar.
-- Foi utilizada componentização para formulários e tabelas (se aplicável).
-📚 10. Licença (opcional)
-markdown
-Copiar
-Editar
-Este projeto está licenciado sob a Licença MIT.
+📃 Licença
+Este projeto está licenciado sob a MIT License. Sinta-se à vontade para usá-lo como base.

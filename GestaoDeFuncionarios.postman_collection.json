@@ -1,0 +1,364 @@
+{
+	"info": {
+		"_postman_id": "22176434-22c5-40b3-98e7-c4f3e9851704",
+		"name": "GestaoDeFuncionarios",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42983895",
+		"_collection_link": "https://develop-8618.postman.co/workspace/Gest%25C3%25A3o-funcionarios~3c0c0bd9-7013-4706-a0fa-2c3ef23de349/collection/42983895-22176434-22c5-40b3-98e7-c4f3e9851704?action=share&source=collection_link&creator=42983895"
+	},
+	"item": [
+		{
+			"name": "cargos",
+			"item": [
+				{
+					"name": "POST cargos",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Desenvolvedor Sr\",\r\n    \"description\": \"Desenvolve sistemas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API}}cargos",
+							"host": [
+								"{{API}}cargos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET cargos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API}}cargos",
+							"host": [
+								"{{API}}cargos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT cargos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Gerente\",\r\n    \"description\": \"Desenvolve sistemas\"\r\n}"
+						},
+						"url": {
+							"raw": "{{API}}cargos/2",
+							"host": [
+								"{{API}}cargos"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE cargos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API}}cargos/3",
+							"host": [
+								"{{API}}cargos"
+							],
+							"path": [
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "empregados",
+			"item": [
+				{
+					"name": "POST empregados",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Caio Manoel\",\r\n    \"email\": \"Caio.leonardo@gmail.com\",\r\n    \"admissionDate\": \"2025-05-01\",\r\n    \"role\": {\r\n        \"id\": 2  \r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API}}empregados",
+							"host": [
+								"{{API}}empregados"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET empregados",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API}}empregados",
+							"host": [
+								"{{API}}empregados"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT empregados",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"João Medeiros\",\r\n    \"email\": \"João.Medeiros@gmail.com\",\r\n    \"admissionDate\": \"2025-05-10\",\r\n    \"role\": {\r\n        \"id\": 1\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "{{API}}empregados/1",
+							"host": [
+								"{{API}}empregados"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE empregados",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{API}}empregados/2",
+							"host": [
+								"{{API}}empregados"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Filter_empregados",
+			"item": [
+				{
+					"name": "GET Filter_name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API}}empregados?name=Caio",
+							"host": [
+								"{{API}}empregados"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Caio"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Filter_email",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API}}empregados?email=leonardo@gmail.com",
+							"host": [
+								"{{API}}empregados"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "leonardo@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Filter_cargos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API}}empregados?roleName=Jr",
+							"host": [
+								"{{API}}empregados"
+							],
+							"query": [
+								{
+									"key": "roleName",
+									"value": "Jr"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Filter_page",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API}}empregados?name=Caio&roleName=Gerente&page=0&size=5",
+							"host": [
+								"{{API}}empregados"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Caio"
+								},
+								{
+									"key": "roleName",
+									"value": "Gerente"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

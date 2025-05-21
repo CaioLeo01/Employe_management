@@ -55,7 +55,7 @@ O frontend se comunica com os seguintes endpoints de API de backend:
 
 ## Modelos de Dados
 ### Cargo
-```typescript
+typescript
 interface Cargo {
   id: number;
   name: string;

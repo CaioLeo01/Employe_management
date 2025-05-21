@@ -96,6 +96,21 @@ Erros de API : Erros são exibidos por meio de snackbars. Revise os logs no cons
 Problemas relacionados
 Persistência de Empregados : Empregados não podem persistir após recarregar uma página se ou backend usando um armazenamento em memória que reinicia ao reiniciar o servidor. Utilize um banco de dados persistente (ex.: PostgreSQL, MongoDB).
 Tratamento de Fuso Horário : Os dados são ajustados para o horário local para evitar compensações. -se de que o armazenamento de dados certifique-se de que o backend esteja alinhado com essa abordagem.
+
+📸 Capturas de Tela
+As capturas de tela da interface frontend foram coletadas para registro e validação de funcionalidades. Estão localizadas em:
+
+\gestão de funcionários\screenshots
+Conteúdo da pasta:
+
+Telas dos formulários de criação e edição de empregados e cargos.
+
+Tabelas exibindo os dados cadastrados.
+
+Notificações de sucesso e erro (snackbars).
+
+Tela do modo escuro e claro com transições animadas.
+
 Melhorias Futuras
 Implementar paginação para lidar com grandes conjuntos de dados.
 Opções de ordenação e filtragem para adicionar tabelas.

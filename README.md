@@ -1,118 +1,123 @@
 # 🏢 Employee Management API
 
-API REST para gestão de empregados e cargos, desenvolvida em **Spring Boot** com operações CRUD, filtros, paginação e validações.
+API REST para gestão de empregados e cargos com Spring Boot 3.x.
 
-## 📋 Requisitos Implementados
+## 🚀 Como Executar o Projeto
 
-### CRUD de Cargos
-- `POST /cargos` - Criar cargo  
-- `GET /cargos` - Listar todos  
-- `GET /cargos/{id}` - Buscar por ID  
-- `PUT /cargos/{id}` - Atualizar  
-- `DELETE /cargos/{id}` - Remover  
+### Pré-requisitos
+- **Java 21** (Verifique com `java -version`)
+- **Maven 3.4.5** (Verifique com `mvn -v`)
+- **Postman** ou similar (para testar endpoints)
 
-### CRUD de Empregados
-- `POST /empregados` - Criar empregado  
-- `GET /empregados` - Listar com filtros  
-- `GET /empregados/{id}` - Buscar por ID  
-- `PUT /empregados/{id}` - Atualizar  
-- `DELETE /empregados/{id}` - Remover  
+---
 
-### ✅ Funcionalidades Extras
-- **Filtros** em `GET /empregados`:
-  ```http
-  GET /empregados?name=João&roleName=Desenvolvedor
-Paginação:
+### Passo a Passo
 
-http
-GET /empregados?page=0&size=5
-Validações:
+1. **Clone o repositório**:
+   ```bash
+   git clone https://github.com/seu-usuario/employee-management.git
+   cd employee-management
+Configure o banco de dados (H2 embutido):
 
-Email único e formato válido
+O projeto já inclui configuração automática
 
-Nome obrigatório
+Acesse o console do H2 em:
+http://localhost:8080/h2-console
+Credenciais (em application.properties):
 
-Data de admissão não pode ser futura
+JDBC URL: jdbc:h2:mem:employeedb
+User: sa
+Password: (vazio)
+Execute o projeto:
 
-🛠 Tecnologias
-Java 21
+bash
+mvn spring-boot:run
+Ou pelo seu IDE favorito (Eclipse/IntelliJ).
 
-Spring Boot 3.x
+Acesse a documentação:
 
-Spring Data JPA
+Swagger UI:
+http://localhost:8080/swagger-ui.html
+(Se não funcionar, tente /swagger-ui/index.html)
 
-H2 Database (em memória para desenvolvimento)
+Endpoint JSON:
+http://localhost:8080/v3/api-docs
 
-Swagger/OpenAPI (Documentação)
+Teste os endpoints:
 
-Lombok (Redução de boilerplate)
+bash
+# Listar empregados
+curl http://localhost:8080/empregados
 
+# Criar novo empregado
+curl -X POST http://localhost:8080/empregados \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "João Silva",
+  "email": "joao@empresa.com",
+  "admissionDate": "2023-08-20",
+  "role": { "id": 1 }
+}'
+🔧 Solução de Problemas Comuns
+Swagger Não Abre?
+Verifique as dependências no pom.xml:
+
+xml
+<dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+    <version>2.1.0</version>
+</dependency>
+URLs alternativas para teste:
+
+http://localhost:8080/swagger-ui/index.html
+http://localhost:8080/v3/api-docs
+Se usar Spring Security, libere os endpoints no SecurityConfig:
+
+java
+@Bean
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http.authorizeHttpRequests(auth -> auth
+        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+        .anyRequest().authenticated()
+    );
+    return http.build();
+}
+Erros no Banco de Dados?
+Verifique se o H2 está ativo no application.properties:
+
+properties
+spring.datasource.url=jdbc:h2:mem:employeedb
+spring.h2.console.enabled=true
 📦 Estrutura do Projeto
 src/
 ├── main/
 │   ├── java/
 │   │   └── com/example/employeemanagement/
-│   │       ├── controller/       # Endpoints REST
-│   │       ├── dto/              # Objetos de transferência
-│   │       ├── model/            # Entidades JPA
-│   │       ├── repository/       # Interfaces JPA
-│   │       ├── service/          # Lógica de negócio
-│   │       └── exception/        # Tratamento de erros
+│   │       ├── config/       # Configurações (OpenAPI, Security)
+│   │       ├── controller/   # Endpoints REST
+│   │       ├── dto/          # Objetos de transferência
+│   │       ├── model/        # Entidades JPA
+│   │       ├── repository/   # Interfaces do banco
+│   │       └── service/      # Regras de negócio
 │   └── resources/
 │       ├── application.properties
-│       └── data.sql              # Dados iniciais
-🚀 Como Executar
-Pré-requisitos
-JDK 17+
-
-Maven 3.8+
-
-P
-
-bash
-mvn spring-boot:run
-Endpoints Disponíveis
-API: http://localhost:8080/empregados
-
-Swagger UI: http://localhost:8080/swagger-ui.html
-
-H2 Console: http://localhost:8080/h2-console (JDBC URL: jdbc:h2:mem:employeedb)
-
-📚 Documentação da API
-Acesse o Swagger UI para:
-
-Ver todos os endpoints
-
-Testar requisições diretamente
-
-Consultar modelos de dados
-
-Swagger Preview
-
-🧪 Testes Automatizados
-bash
-mvn test
-Cobertura:
-
-Testes de serviço
-
-Validações de entrada
-
-🐳 Docker (Opcional)
-Para rodar em container:
+│       └── data.sql          # Dados iniciais
+🐳 Executando com Docker
+Construa a imagem:
 
 bash
 docker build -t employee-api .
+Inicie o container:
+
+bash
 docker run -p 8080:8080 employee-api
-📝 Licença
-Este projeto está sob a licença MIT. Veja o arquivo LICENSE para detalhes.
-
-✨ Dúvidas? Abra uma issue ou contate o desenvolvedor.
+✨ Dúvidas? Consulte a documentação completa em Swagger UI ou abra uma issue.
 
 
-### 🔍 Detalhes Incluídos:
-1. **Organização clara** dos requisitos atendidos  
-2. **Instruções passo a passo** para execução  
-3. **Links úteis** (Swagger, H2 Console)  
-4. **Estrutura de pastas** documentada  
-5. **Bônus**: Docker e testes mencionados
+### Principais Melhorias:
+1. **Passos detalhados** desde o clone até execução
+2. **Solução de problemas** com Swagger e H2
+3. **Comandos curl** prontos para testar a API
+4. **Docker** incluído como opção
+5. **Estrutura de pastas** documentada

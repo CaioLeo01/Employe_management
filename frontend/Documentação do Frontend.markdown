@@ -117,7 +117,7 @@ Persistência de Empregados: Empregados não persistem após recarregar a págin
 Tratamento de Fuso Horário: Os dados são ajustados para o horário local para evitar compensações. Certifique-se de que o backend esteja alinhado com essa abordagem.
 
 📸 Capturas de Tela
-As capturas de tela da interface frontend foram coletadas para registro e validação de funcionalidades. Estão localizadas em:gestão de funcionários/frontend/screenshot  
+As capturas de tela da interface frontend foram coletadas para registro e validação de funcionalidades. Estão localizadas em:gestão de funcionários/frontend/screenshot
 Conteúdo da pasta:
 
 Telas dos formulários de criação e edição de empregados e cargos.

@@ -100,7 +100,7 @@ Tratamento de Fuso Horário : Os dados são ajustados para o horário local para
 📸 Capturas de Tela
 As capturas de tela da interface frontend foram coletadas para registro e validação de funcionalidades. Estão localizadas em:
 
-\gestão de funcionários\screenshots
+'\gestão de funcionários\screenshots'
 Conteúdo da pasta:
 
 Telas dos formulários de criação e edição de empregados e cargos.
